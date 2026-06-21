@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from roadmap import model
+from backend.agents.roadmap import client
 
 
 def extract_resume_text(uploaded_file):
@@ -49,6 +49,9 @@ def analyze_resume(resume_text, role):
     6. Industry Readiness Level
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return response.text

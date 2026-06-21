@@ -1,4 +1,4 @@
-from roadmap import generate_roadmap
+from backend.agents.roadmap import generate_roadmap
 
 result = generate_roadmap(
     "Software Developer",

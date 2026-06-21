@@ -1,4 +1,5 @@
-from roadmap import model
+from backend.agents.roadmap import client
+
 
 def generate_simulation(role):
 
@@ -20,6 +21,9 @@ def generate_simulation(role):
     Make it realistic and beginner friendly.
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return response.text

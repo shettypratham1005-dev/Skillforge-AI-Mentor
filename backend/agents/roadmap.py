@@ -1,15 +1,14 @@
-import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+from google import genai
+from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
-genai.configure(
+client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
-
-model = genai.GenerativeModel("gemini-2.5-flash")
-
 
 # =========================
 # AI MENTOR CHAT
@@ -34,7 +33,10 @@ def ask_mentor(role, question):
     {question}
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return response.text
 
@@ -46,29 +48,27 @@ def ask_mentor(role, question):
 def analyze_task(role, task):
 
     prompt = f"""
-    You are a Senior {role} Team Lead.
+    You are a Senior {role} Mentor.
 
-    A fresher has received the following task:
+    Analyze the following manager-assigned task.
 
+    Task:
     {task}
 
-    Explain:
-
-    1. What the task means
-    2. Expected deliverables
-    3. Step-by-step execution plan
-    4. Industry workflow
-    5. Common mistakes
-    6. Estimated timeline
-    7. Tips from a Senior Engineer
-
-    Give a practical and beginner-friendly explanation.
+    Provide:
+    1. Task Understanding
+    2. Required Skills
+    3. Step-by-Step Approach
+    4. Common Mistakes
+    5. Expected Deliverables
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return response.text
-
 
 # =========================
 # PROFESSIONAL COMMUNICATION
@@ -97,8 +97,10 @@ def generate_workplace_message(
     and beginner-friendly.
     """
 
-    response = model.generate_content(prompt)
-
+    response = client.models.generate_content(
+    model="gemini-3.1-flash-lite",
+    contents=prompt
+    )
     return response.text
 
 
@@ -131,7 +133,10 @@ def generate_checklist(role, task):
     ☐ Implement API
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+    model="gemini-3.1-flash-lite",
+    contents=prompt
+)
 
     return response.text
 
@@ -269,6 +274,9 @@ def generate_roadmap(role, score, resume_text=""):
         Create Day 1 to Day 30.
         """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return response.text
