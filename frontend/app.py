@@ -6,6 +6,12 @@ sys.path.append(
         os.path.join(os.path.dirname(__file__), "..")
     )
 )
+from backend.database.database import engine
+from backend.database.models import Base
+
+Base.metadata.create_all(bind=engine)
+
+import streamlit as st
 
 import streamlit as st
 
